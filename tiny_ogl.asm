@@ -1,4 +1,10 @@
-%include 'windemos.inc'
+%include 'nasmx-1.0\inc\nasmx.inc'
+%include 'nasmx-1.0\inc\win32\windows.inc'
+%include 'nasmx-1.0\inc\win32\kernel32.inc'
+%include 'nasmx-1.0\inc\win32\user32.inc'
+%include 'nasmx-1.0\inc\win32\gdi32.inc'
+%include 'nasmx-1.0\inc\win32\opengl32.inc'
+;%include 'nasmx-1.0\inc\win32\msvcrt.inc'
 
 entry entrypoint
 
@@ -8,8 +14,8 @@ YRES    equ     786
 [section .text]
 proc    entrypoint, ptrdiff_t argcount, ptrdiff_t cmdline
 locals none
-    invoke  ChangeDisplaySettingsA, dmScreenSettings, 4
-    invoke  CreateWindowEx, 0, szEdit, 0, WS_POPUP + WS_VISIBLE + WS_MAXIMIZE, 0, 0, XRES, YRES, 0, 0, 0, 0
+;    invoke  ChangeDisplaySettingsA, ptrdiff_t [dmScreenSettings], 0x00000004
+    invoke  CreateWindowExA, 0, szEdit, 0, WS_POPUP + WS_VISIBLE, 0, 0, XRES, YRES, 0, 0, 0, 0
     invoke  GetDC, eax
     mov     ptrdiff_t [hDc], eax
     invoke  ChoosePixelFormat, ptrdiff_t [hDc], pfd
@@ -17,13 +23,23 @@ locals none
     invoke  wglCreateContext, ptrdiff_t [hDc]
     invoke  wglMakeCurrent, ptrdiff_t [hDc], eax
     invoke  ShowCursor, FALSE
+    invoke  glViewport, 0, 0, XRES, YRES
+    invoke  glMatrixMode, 0x1701
+    invoke  glLoadIdentity
+    invoke  glOrtho, 0, XRES, 0, YRES, -1, 1
+    invoke  glMatrixMode, 0x1700
+    invoke  glLoadIdentity
 .intro_loop:
+    invoke  glColor3ub, 255, 255, 255
+    invoke  glBegin, 0x0000
+    invoke  glVertex2i, 100, 100
+    invoke  glEnd
     invoke  SwapBuffers, ptrdiff_t [hDc]
     invoke  PeekMessageA, 0, 0, 0, 0, PM_REMOVE
     invoke  GetAsyncKeyState, VK_ESCAPE
     cmp     eax, dword 0
     je      .intro_loop
-    invoke  ExitProcess, NULL
+    invoke  ExitProcess, 0
 endproc
 
 [section .bss]
@@ -86,4 +102,12 @@ endproc
         NASMX_AT dmPelsHeight, YRES
         NASMX_AT dmDisplayFlags, 0
         NASMX_AT dmDisplayFrequency, 0
+        NASMX_AT dmICMMethod, 0
+        NASMX_AT dmICMIntent, 0
+        NASMX_AT dmMediaType, 0
+        NASMX_AT dmDitherType, 0
+        NASMX_AT dmReserved1, 0
+        NASMX_AT dmReserved2, 0
+        NASMX_AT dmPanningWidth, 0
+        NASMX_AT dmPanningHeight, 0
     NASMX_IENDSTRUC
