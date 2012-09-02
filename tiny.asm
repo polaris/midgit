@@ -69,8 +69,6 @@ locals none
     invoke  do_intro
     ; show buffer
     invoke  StretchDIBits, ptrdiff_t [hDc], 0, 0, XRES, YRES, 0, 0, XRES, YRES, buffer, bmi, DIB_RGB_COLORS, SRCCOPY
-    ; give some time to other processes
-    invoke  Sleep, 1
     ; repeat
     jmp     .intro_loop
 .intro_end:

@@ -78,6 +78,8 @@
 %define WS_EX_WINDOWEDGE 00000100h
 %define WS_CLIPSIBLINGS 4000000h
 %define WS_CLIPCHILDREN 2000000h
+%define WS_POPUP 80000000h
+%define WS_MAXIMIZE 1000000h
 
 %define PM_REMOVE 1h
 %define VK_ESCAPE 1Bh
@@ -155,6 +157,63 @@ NASMX_STRUC BITMAPINFO
     NASMX_RESERVE bmiColors, int32_t, 1
 NASMX_ENDSTRUC
 
+NASMX_STRUC PIXELFORMATDESCRIPTOR
+    NASMX_RESERVE nSize, short_t, 1
+    NASMX_RESERVE nVersion, short_t, 1
+    NASMX_RESERVE dwFlags, int32_t, 1
+    NASMX_RESERVE iPixelType, int8_t, 1
+    NASMX_RESERVE cColorBits, int8_t, 1
+    NASMX_RESERVE cRedBits, int8_t, 1
+    NASMX_RESERVE cRedShift, int8_t, 1
+    NASMX_RESERVE cGreenBits, int8_t, 1
+    NASMX_RESERVE cGreenShift, int8_t, 1
+    NASMX_RESERVE cBlueBits, int8_t, 1
+    NASMX_RESERVE cBlueShift, int8_t, 1
+    NASMX_RESERVE cAlphaBits, int8_t, 1
+    NASMX_RESERVE cAlphaShift, int8_t, 1
+    NASMX_RESERVE cAccumBits, int8_t, 1
+    NASMX_RESERVE cAccumRedBits, int8_t, 1
+    NASMX_RESERVE cAccumGreenBits, int8_t, 1
+    NASMX_RESERVE cAccumBlueBits, int8_t, 1
+    NASMX_RESERVE cAccumAlphaBits, int8_t, 1
+    NASMX_RESERVE cDepthBits, int8_t, 1
+    NASMX_RESERVE cStencilBits, int8_t, 1
+    NASMX_RESERVE cAuxBuffers, int8_t, 1
+    NASMX_RESERVE iLayerType, int8_t, 1
+    NASMX_RESERVE bReserved, int8_t, 1
+    NASMX_RESERVE dwLayerMask, int32_t, 1
+    NASMX_RESERVE dwVisibleMask, int32_t, 1
+    NASMX_RESERVE dwDamageMask, int32_t, 1
+NASMX_ENDSTRUC
+
+NASMX_STRUC DEVMODE
+    NASMX_RESERVE dmDeviceName, int8_t, 1
+    NASMX_RESERVE dmSpecVersion, short_t, 1
+    NASMX_RESERVE dmDriverVersion, short_t, 1
+    NASMX_RESERVE dmSize, short_t, 1
+    NASMX_RESERVE dmDriverExtra, short_t, 1
+    NASMX_RESERVE dmFields, int32_t, 1
+    NASMX_RESERVE dmOrientation, short_t, 1
+    NASMX_RESERVE dmPaperSize, short_t, 1
+    NASMX_RESERVE dmPaperiLength, short_t, 1
+    NASMX_RESERVE dmPaperWidth, short_t, 1
+    NASMX_RESERVE dmScale, short_t, 1
+    NASMX_RESERVE dmCopies, short_t, 1
+    NASMX_RESERVE dmDefaultSource, short_t, 1
+    NASMX_RESERVE dmPrintQuality, short_t, 1
+    NASMX_RESERVE dmColor, short_t, 1
+    NASMX_RESERVE dmDuplex, short_t, 1
+    NASMX_RESERVE dmYResolution, short_t, 1
+    NASMX_RESERVE dmTTOption, short_t, 1
+    NASMX_RESERVE dmCollate, short_t, 1
+    NASMX_RESERVE dmFormName, int8_t, CCHFORMNAME
+    NASMX_RESERVE dmUnusedPadding, short_t, 1
+    NASMX_RESERVE dmBitsPerPel, short_t, 1
+    NASMX_RESERVE dmPelsWidth, int32_t, 1
+    NASMX_RESERVE dmPelsHeight, int32_t, 1
+    NASMX_RESERVE dmDisplayFlags, int32_t, 1
+    NASMX_RESERVE dmDisplayFrequency, int32_t, 1
+NASMX_ENDSTRUC
 
 ;/////////////////////////////////////////////////////
 ;// KERNEL32.INC PROTOTYPES
@@ -176,6 +235,9 @@ IMPORT Sleep, 4
 ;// GDI32.INC PROTOTYPES
 ;/////////////////////////////////////////////////////
 IMPORT StretchDIBits, 52
+IMPORT SetPixelFormat, 12
+IMPORT ChoosePixelFormat, 8
+IMPORT SwapBuffers, 4
 
 ;/////////////////////////////////////////////////////
 ;// WINMM.INC PROTOTYPES
@@ -196,7 +258,14 @@ IMPORT ReleaseDC, 8
 IMPORT DestroyWindow, 4
 IMPORT PeekMessageA, 20
 IMPORT GetAsyncKeyState, 4
+IMPORT ChangeDisplaySettingsA, 8
+IMPORT ShowCursor, 4
 
+;/////////////////////////////////////////////////////
+;// OPENGL32.INC PROTOTYPES
+;/////////////////////////////////////////////////////
+IMPORT wglCreateContext, 4
+IMPORT wglMakeCurrent, 8
 
 ;/////////////////////////////////////////////////////
 ;// MSVCRT.INC PROTOTYPES
