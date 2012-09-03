@@ -4,7 +4,6 @@
 %include 'nasmx-1.0\inc\win32\user32.inc'
 %include 'nasmx-1.0\inc\win32\gdi32.inc'
 %include 'nasmx-1.0\inc\win32\opengl32.inc'
-;%include 'nasmx-1.0\inc\win32\msvcrt.inc'
 
 entry entrypoint
 
@@ -14,7 +13,7 @@ YRES    equ     786
 [section .text]
 proc    entrypoint, ptrdiff_t argcount, ptrdiff_t cmdline
 locals none
-;    invoke  ChangeDisplaySettingsA, ptrdiff_t [dmScreenSettings], 0x00000004
+    invoke  ChangeDisplaySettingsA, ptrdiff_t [dmScreenSettings], 0x00000004
     invoke  CreateWindowExA, 0, szEdit, 0, WS_POPUP + WS_VISIBLE, 0, 0, XRES, YRES, 0, 0, 0, 0
     invoke  GetDC, eax
     mov     ptrdiff_t [hDc], eax
