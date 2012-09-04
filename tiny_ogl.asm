@@ -9,7 +9,7 @@ entry entrypoint
 
 XRES    equ     1024
 YRES    equ     786
-
+ 
 [section .text]
 proc    entrypoint, ptrdiff_t argcount, ptrdiff_t cmdline
 locals none
