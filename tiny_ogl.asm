@@ -1,5 +1,3 @@
-;%include 'nasmx-1.0\inc\nasmx.inc'
-
 global  main
 
 extern _glOrtho@48
