@@ -6517,14 +6517,6 @@ NASMX_STRUC DEVMODE
     NASMX_RESERVE dmPelsHeight, int32_t, 1
     NASMX_RESERVE dmDisplayFlags, int32_t, 1
     NASMX_RESERVE dmDisplayFrequency, int32_t, 1
-	NASMX_RESERVE dmICMMethod, int32_t, 1
-    NASMX_RESERVE dmICMIntent, int32_t, 1
-    NASMX_RESERVE dmMediaType, int32_t, 1
-    NASMX_RESERVE dmDitherType, int32_t, 1
-    NASMX_RESERVE dmReserved1, int32_t, 1
-    NASMX_RESERVE dmReserved2, int32_t, 1
-    NASMX_RESERVE dmPanningWidth, int32_t, 1
-    NASMX_RESERVE dmPanningHeight, int32_t, 1
 NASMX_ENDSTRUC
 
 NASMX_STRUC RGNDATAHEADER
